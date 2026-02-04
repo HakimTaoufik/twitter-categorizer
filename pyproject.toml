@@ -1,0 +1,25 @@
+[project]
+name = "twitter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.3.5",
+    "pandas>=2.3.3",
+    "scikit-learn>=1.8.0",
+]
+
+[dependency-groups]
+random-forests = [
+    "catboost>=1.2.8",
+    "xgboost>=3.1.2",
+]
+deep-learning = [
+    "torch>=2.9.1",
+    "transformers>=4.57.3",
+]
+dev = [
+    "matplotlib>=3.10.8",
+    "ipykernel>=7.1.0",
+]
