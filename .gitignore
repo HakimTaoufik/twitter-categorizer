@@ -1,0 +1,30 @@
+# Local datasets and derived records (never publish tweet/user data).
+/data/
+*.jsonl
+
+# Generated outputs. Existing tracked files remain tracked.
+/output/
+/red.csv
+/multimodal_influencer_model_final.pth
+/catboost_info/
+*.csv
+*.pth
+*.pt
+*.log
+
+# Python environments and caches.
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# OS/editor files and local credentials.
+.DS_Store
+.env
+.env.*
+!.env.example
+.kaggle/
+.aws/
+.agents/
+.codex/
