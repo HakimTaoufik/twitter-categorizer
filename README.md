@@ -10,28 +10,12 @@ The repository implements two approaches to investigate this question. A control
 
 ## Two approaches
 
-```mermaid
-flowchart TB
-    RAW["Twitter JSONL: one tweet + account metadata"] --> CLEAN["cleaning.py: full text, counts, time, source and context features"]
-    subgraph A["A · TF-IDF/SVD + boosted trees · baseline.py"]
-        TXT["Tweet text → word TF-IDF → SVD, 200 dimensions"] --> JOIN["Concatenate features"]
-        META["26 numeric + 12 boolean + 12 categorical features<br/>Imputation, scaling and one-hot encoding"] --> JOIN
-        JOIN --> TREES["XGBoost and CatBoost<br/>5 stratified row folds per model"]
-        TREES --> AVG["Average fold/model probabilities<br/>Threshold selected on OOF predictions"]
-    end
-    subgraph B["B · BERTweet + metadata + attention · main.py"]
-        TWEET["Tweet text → shared BERTweet → first-token vector → projection"] --> TOKENS["3 tokens, each 256 dimensions"]
-        DESC["User description → shared BERTweet → first-token vector → projection"] --> TOKENS
-        TAB["6 numeric metadata features → MLP"] --> TOKENS
-        TOKENS --> ATT["4-head self-attention + residual feed-forward block"]
-        ATT --> HEAD["Fused tweet token → classification head<br/>Binary cross-entropy; sigmoid threshold 0.5"]
-    end
-    CLEAN --> TXT
-    CLEAN --> META
-    CLEAN --> TWEET
-    RAW --> KEEP["External preparation helper retains description,<br/>account creation time and location for B"]
-    KEEP --> DESC
-    KEEP --> TAB
+```text
+Baseline
+Tweet + metadata → TF-IDF/SVD + encoding → XGBoost/CatBoost → Prediction
+
+Deep model
+Tweet + description + metadata → BERTweet + MLP → Attention fusion → Prediction
 ```
 
 The baseline already combines text with metadata; it is not a metadata-only ablation. The deep model jointly trains a shared text encoder and an attention fusion network, rather than averaging independently trained classifiers. See [methodology](docs/METHODOLOGY.md) for exact features, hyperparameters and differences from the report's historical experiments.
