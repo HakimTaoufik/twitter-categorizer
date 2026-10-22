@@ -1,7 +1,7 @@
 [project]
 name = "twitter"
 version = "0.1.0"
-description = "Add your description here"
+description = "Twitter influence classification with TF-IDF/tree and BERTweet/metadata attention pipelines"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
